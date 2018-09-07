@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     "mode": "development",
@@ -9,8 +10,12 @@ module.exports = {
         "path": path.resolve(__dirname, "build"), // string
         // the target directory for all output files
         // must be an absolute path (use the Node.js path module)
-        "filename": "[name].bundle.js",
-        "chunkFilename": "[name].bundle.js",
+        "filename": "[name].bundle.js"
+    },
+    "devServer": {
+        "contentBase": path.join(__dirname, 'build'),
+        "compress": true,
+        "port": 9000
     },
     "module": {
         "rules": [
@@ -20,17 +25,24 @@ module.exports = {
                 "use": {
                     "loader": "babel-loader",
                     "options": {
-                        "presets": ["env"],
-                        "plugins": ["@babel/plugin-syntax-dynamic-import"]
+                        "presets": ["@babel/env"],
+                        "plugins": [
+                            "@babel/plugin-syntax-dynamic-import",
+                            "@babel/plugin-transform-runtime"
+                        ]
                     },
+
                 },
 
             }
         ]
     },
     "plugins": [
+        new HtmlWebpackPlugin({
+            filename: './index.html',
+            template: './src/index.html'
+        }),
         new CopyWebpackPlugin([
-            { from: './src/index.html', to: '' },
             { from: './src/style.css', to: '' }
         ])
     ],

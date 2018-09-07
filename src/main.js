@@ -1,4 +1,4 @@
-import db from './firebaseConfig';
+import { firebase } from '@firebase/app';
 
 (function(){
     const apiKey =  'a4c22d76';
@@ -7,9 +7,9 @@ import db from './firebaseConfig';
     let searchTerm;
 
     searchField.addEventListener('input', async function() {
-        const imdb =  await import('imdb-api');
+        let imdb = await import('imdb-api');
 
-        searchTerm = this.value;
+        searchTerm = searchField.value;
         closeAllLists();
         if(!searchTerm) {
             output.innerHTML = '';
@@ -59,7 +59,8 @@ import db from './firebaseConfig';
         }
     }, true);
 
-    function addMovie(name, poster){
+    async function addMovie(name, poster){
+        await import('./firebaseConfig');
         /*db.collection('test').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if (doc.data().name === name) {
@@ -68,27 +69,37 @@ import db from './firebaseConfig';
                 }
             });
         });*/
-        db.collection("test").doc(name).set({
-            name: name,
-            poster: poster
+
+        firebase.firestore()
+            .collection("movie_database")
+            .doc(name).set({
+                name: name,
+                poster: poster
         })
         .then(function(doc) {
             console.log("Document written with Name: ", doc);
+            document.querySelector('#btnShow').classList.remove('disabled');
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
     }
+    document.querySelector('#btnShow').addEventListener('click', async () => {
+        document.querySelector('#btnShow').classList.add('disabled');
+        //await import('./firebaseConfig');
+        await import('./firebaseConfig');
 
-    db.collection('test')
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                let data = {
-                    'poster': doc.data().poster,
-                    'name': doc.data().name
-                }
-                console.table(data);
-            })
+        firebase.firestore()
+        .collection("movie_database")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    let data = {
+                        'poster': doc.data().poster,
+                        'name': doc.data().name
+                    }
+                    console.table(data);
+                })
         })
+    });
 })();

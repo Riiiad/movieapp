@@ -113,6 +113,7 @@ ul li .details, ul li p, ul li img {
     z-index: 1000;
 }
 .header .headerButton {
+    color: white;
     width: 24px;
     height: 24px;
     margin-right: 16px;
@@ -125,10 +126,8 @@ ul li .details, ul li p, ul li img {
     outline: none;
     cursor: pointer;
 }
-.header #butRefresh {
-    background: url(assets/images/ic_refresh_white_24px.svg) center center no-repeat; }
-.header #butAdd {
-    background: url(assets/images/ic_add_white_24px.svg) center center no-repeat; }
+.header #btnShow {
+    background: url(assets/refresh.svg) center center no-repeat; }
 
 .header__title {
     font-weight: 400;
@@ -138,4 +137,8 @@ ul li .details, ul li p, ul li img {
     -webkit-flex: 1;
         -ms-flex: 1;
             flex: 1;
+}
+
+.disabled {
+    display: none;
 }

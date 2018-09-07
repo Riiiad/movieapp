@@ -80,5 +80,6 @@ cobertura.xml
 
 /node_modules/
 /build/*
+!/build/assets
 *.log
 .editorconfig
