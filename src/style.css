@@ -51,7 +51,7 @@ ul {
     display: flex;
     justify-content: space-between;
 }
-li.search-results {
+.search-results {
     font: 18px sans-serif;
     padding: 5px;
     margin: 10px 0 17px 0;
@@ -59,15 +59,15 @@ li.search-results {
     overflow: hidden;
     transition: all .5s;
 }
-li.search-results img {
+.search-results img {
     height: 100px;
 }
-ul li.search-results:hover {
+.search-results:hover {
     cursor: pointer;
     background-color: rgb(11, 31, 44);
     color: whitesmoke;
 }
-ul li .details, ul li p, ul li img {
+ul li div .details, ul li div p, ul  li div img {
     pointer-events: none;
 }
 
@@ -137,6 +137,18 @@ ul li .details, ul li p, ul li img {
     -webkit-flex: 1;
         -ms-flex: 1;
             flex: 1;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    display: none;
+}
+
+.show {
+    display: block;
 }
 
 .disabled {
